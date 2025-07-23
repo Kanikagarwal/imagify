@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 const Navbar = () => {
-  const { user,setShowLogin,credit,setCredit,logout } = useContext(AppContext);
+  const { user,setShowLogin,credit,setCredit,logout,darkMode,toggleDarkMode } = useContext(AppContext);
   console.log(credit);
   
   const navigate = useNavigate();
@@ -26,6 +26,7 @@ const Navbar = () => {
               </p>
             </button>
             <p className="text-gray-600 max-sm:hidden pl-4">Hi, {user.name}</p>
+            <div className="px-2 cursor-pointer" onClick={toggleDarkMode}> <i class={`fa-solid ${darkMode?"fa-sun":"fa-moon"}`}></i></div>
             <div className="relative group">
               <img
                 src={assets.profile_icon}
@@ -35,6 +36,7 @@ const Navbar = () => {
               <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
                 <ul className="list-none m-0 p-2 border bg-white rounded-md text-sm">
                   <li className="px-2 cursor-pointer" onClick={logout}>Logout</li>
+                  
                 </ul>
               </div>
             </div>
