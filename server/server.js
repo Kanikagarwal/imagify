@@ -7,9 +7,14 @@ import imageRouter from './routes/imageRoutes.js';
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+const allowedOrigins = ['https://imagify-3dal.vercel.app'];
 
 app.use(express.json())
-app.use(cors());
+
+   app.use(cors({
+     origin: allowedOrigins,
+     credentials: true, // if you need cookies/auth
+   }));
 
 await connectDB()
 app.use("/api/user",userRouter)
