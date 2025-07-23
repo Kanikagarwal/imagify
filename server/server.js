@@ -7,7 +7,7 @@ import imageRouter from './routes/imageRoutes.js';
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const allowedOrigins = ['https://imagify-3dal.vercel.app'];
+const allowedOrigins = ['https://imagify-3dal.vercel.app','http://localhost:5173'];
 
 app.use(express.json())
 
