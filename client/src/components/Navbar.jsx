@@ -26,7 +26,7 @@ const Navbar = () => {
               </p>
             </button>
             <p className="text-gray-600 max-sm:hidden pl-4">Hi, {user.name}</p>
-            <div className="px-2 cursor-pointer" onClick={toggleDarkMode}> <i class={`fa-solid ${darkMode?"fa-sun":"fa-moon"}`}></i></div>
+            <div className="px-2 cursor-pointer" onClick={toggleDarkMode}> <i className={`fa-solid ${darkMode?"fa-sun":"fa-moon"}`}></i></div>
             <div className="relative group">
               <img
                 src={assets.profile_icon}

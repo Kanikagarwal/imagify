@@ -20,6 +20,10 @@ const BuyCredit = () => {
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
+        console.log("Full Razorpay Response:", response);
+    console.log("Order ID:", response.razorpay_order_id);
+    console.log("Payment ID:", response.razorpay_payment_id);
+    console.log("Signature:", response.razorpay_signature);
         try {
           const {data}=await axios.post(backendUrl+"/api/user/verify-razor",response,{headers:{token}})
           if(data.success){
@@ -32,6 +36,10 @@ const BuyCredit = () => {
         }
       },
     };
+    if (!window.Razorpay) {
+  toast.error("Payment SDK failed to load. Please try again.");
+  return;
+}
     const rzp=new window.Razorpay(options)
     rzp.open()
   };
@@ -39,6 +47,7 @@ const BuyCredit = () => {
     try {
       if (!user) {
         setShowLogin(true);
+        return;
       }
       const { data } = await axios.post(
         backendUrl + "/api/user/pay-razor",
