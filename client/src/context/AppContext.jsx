@@ -10,6 +10,7 @@ const AppContextProvider = (props) => {
   const [showLogin, setShowLogin] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [credit, setCredit] = useState(false);
+  const [history,setHistory] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   console.log(backendUrl);
@@ -88,6 +89,23 @@ const AppContextProvider = (props) => {
     }
   }, [token]);
 
+const fetchHistory = async () => {
+  try {
+    const { data } = await axios.get(
+      backendUrl + "/api/image/history",
+      { headers: { token } }
+    );
+console.log(data);
+
+    if (data.success) {
+      setHistory(data.history);
+      navigate("/history");
+    }
+
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
 
 
 //   THEME TOGGLE
@@ -108,6 +126,8 @@ const AppContextProvider = (props) => {
     generateImage,
     darkMode,
     toggleDarkMode,
+    fetchHistory,
+    history
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

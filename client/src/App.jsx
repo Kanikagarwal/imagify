@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Home from './pages/Home'
+import History from './pages/History'
 import Result from './pages/Result'
 import BuyCredit from './pages/BuyCredit'
 import {Routes,Route} from 'react-router-dom'
@@ -20,6 +21,7 @@ const App = () => {
       <Route path='/' element={<Home/>}/>
       <Route path='/result' element={<Result/>}/>
       <Route path='/buy' element={<BuyCredit/>}/>
+      <Route path='/history' element={<History/>}/>
       </Routes>
       <Footer/>
     </div>

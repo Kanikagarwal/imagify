@@ -1,7 +1,7 @@
 import FormData from "form-data";
 import userModel from "../models/userModel.js";
 import axios  from "axios";
-
+import historyModel from "../models/historyModel.js";
 export const generateImage = async (req, res) => {
   try {
     const { userId, prompt } = req.body;
@@ -9,7 +9,7 @@ export const generateImage = async (req, res) => {
     if (!user || !prompt) {
       return res.json({ success: false, message: "Missing Details" });
     }
-    if (user.creditBalance == 0 || userModel.creditBalance < 0) {
+    if (user.creditBalance <= 0) {
       return res.json({
         success: false,
         message: "No credit Balance",
@@ -36,6 +36,15 @@ export const generateImage = async (req, res) => {
     await userModel.findByIdAndUpdate(user._id, {
       creditBalance: user.creditBalance - 1,
     });
+
+    // Save History
+    await historyModel.create({
+      userId: user._id,
+      prompt: prompt,
+      imageUrl: resultImage,
+    });
+
+
     return res.json({
       success: true,
       message: "Image Generated",
@@ -48,6 +57,22 @@ export const generateImage = async (req, res) => {
   }
 };
 
-// sY4P9Azq89VudfrpPl5qSdXj7lC3
+export const getHistory = async (req, res) => {
+  try {
 
-// b2e92083e36839feca08fdc13e3c53c515fde06bf3c8c28ef6cdafba565f85b48a1c702191b74506beef3a8d9e584e2f
+    const {userId} = req.body;
+
+    const history = await historyModel
+      .find({ userId })
+      .sort({ createdAt: -1 })
+      .limit(20);
+
+    res.json({
+      success: true,
+      history
+    });
+
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};

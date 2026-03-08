@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 const Navbar = () => {
-  const { user,setShowLogin,credit,setCredit,logout,darkMode,toggleDarkMode } = useContext(AppContext);
+  const { user,setShowLogin,credit,setCredit,logout,darkMode,toggleDarkMode,fetchHistory,history } = useContext(AppContext);
   console.log(credit);
   
   const navigate = useNavigate();
@@ -35,8 +35,8 @@ const Navbar = () => {
               />
               <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
                 <ul className="list-none m-0 p-2 border bg-white rounded-md text-sm">
-                  <li className="px-2 cursor-pointer" onClick={logout}>Logout</li>
-                  
+                  <li className="px-2 cursor-pointer py-2" onClick={fetchHistory}>History</li>
+                  <li className="px-2 cursor-pointer border-b py-2" onClick={logout}>Logout</li>
                 </ul>
               </div>
             </div>
