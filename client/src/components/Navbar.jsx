@@ -35,8 +35,8 @@ const Navbar = () => {
               />
               <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
                 <ul className="list-none m-0 p-2 border bg-white rounded-md text-sm">
-                  <li className="px-2 cursor-pointer py-2" onClick={fetchHistory}>History</li>
-                  <li className="px-2 cursor-pointer border-b py-2" onClick={logout}>Logout</li>
+                  <li className="px-2 cursor-pointer py-2 border-b" onClick={fetchHistory}>History</li>
+                  <li className="px-2 cursor-pointer py-2" onClick={logout}>Logout</li>
                 </ul>
               </div>
             </div>
