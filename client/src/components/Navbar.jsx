@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { assets } from "../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -6,7 +6,20 @@ import { AppContext } from "../context/AppContext";
 const Navbar = () => {
   const { user,setShowLogin,credit,setCredit,logout,darkMode,toggleDarkMode,fetchHistory,history } = useContext(AppContext);
   console.log(credit);
-  
+  const [open,setOpen] = useState(false);
+  console.log(open);
+  const menuref = useRef();
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (open && menuref.current && !menuref.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("click", checkIfClickedOutside)
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside)
+    }
+  }, [open])
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between py-4">
@@ -27,18 +40,21 @@ const Navbar = () => {
             </button>
             <p className="text-gray-600 max-sm:hidden pl-4">Hi, {user.name}</p>
             <div className="px-2 cursor-pointer" onClick={toggleDarkMode}> <i className={`fa-solid ${darkMode?"fa-sun":"fa-moon"}`}></i></div>
-            <div className="relative group">
+            <div ref={menuref} className="relative group">
               <img
                 src={assets.profile_icon}
-                className="w-10 drop-shadow"
+                onClick={()=>setOpen(!open)}
+                className="w-10 drop-shadow cursor-pointer"
                 alt=""
               />
-              <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
-                <ul className="list-none m-0 p-2 border bg-white rounded-md text-sm">
-                  <li className="px-2 cursor-pointer py-2 border-b" onClick={fetchHistory}>History</li>
-                  <li className="px-2 cursor-pointer py-2" onClick={logout}>Logout</li>
-                </ul>
-              </div>
+              {open && (
+                <div className="absolute top-0 right-0 z-10 text-black rounded pt-12">
+                  <ul className="list-none m-0 p-2 border bg-white rounded-md text-sm">
+                    <li className="px-2 cursor-pointer py-2 border-b" onClick={fetchHistory}>History</li>
+                    <li className="px-2 cursor-pointer py-2" onClick={logout}>Logout</li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         ) : (

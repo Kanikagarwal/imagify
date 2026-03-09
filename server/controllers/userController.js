@@ -24,7 +24,7 @@ try {
     res.json({success:true,token,user:{name:user.name}})
 } catch (error) {
     console.log(error);
-    res.json({success:false,message:error.message})
+    res.json({success:false,message:"Wrong Details"})
 }
 }
 
@@ -48,7 +48,7 @@ export const loginUser = async (req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        res.json({success:false,message:error.message})
+        res.json({success:false,message:"Wrong Details"})
     }
 }
 
