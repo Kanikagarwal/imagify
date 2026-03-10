@@ -42,6 +42,7 @@ const AppContextProvider = (props) => {
     localStorage.removeItem("token");
     setToken("");
     setUser(null);
+    setHistory([]);
   };
 
   const loadCreditData = async () => {
